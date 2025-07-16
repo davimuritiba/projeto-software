@@ -46,22 +46,27 @@ public class FriendService
         return false;
     }
 
-    private void addFriendship(UUID u1, UUID u2) {
+    private void addFriendship(UUID u1, UUID u2)
+    {
         friends.computeIfAbsent(u1, k -> new HashSet<>()).add(u2);
         friends.computeIfAbsent(u2, k -> new HashSet<>()).add(u1);
     }
 
-    public boolean isAlreadyFriends(UUID u1, UUID u2) {
+    public boolean isAlreadyFriends(UUID u1, UUID u2)
+    {
         return friends.getOrDefault(u1, new HashSet<>()).contains(u2);
     }
 
-    public Set<UUID> getFriends(UUID userId) {
+    public Set<UUID> getFriends(UUID userId)
+    {
         return friends.getOrDefault(userId, new HashSet<>());
     }
 
-    public List<FriendRequest> getPendingRequests(UUID userId) {
+    public List<FriendRequest> getPendingRequests(UUID userId)
+    {
         List<FriendRequest> result = new ArrayList<>();
-        for (FriendRequest r : requests) {
+        for (FriendRequest r : requests)
+        {
             if (r.getReceiverId().equals(userId) && r.getStatus() == RequestStatus.PENDING) {
                 result.add(r);
             }
