@@ -2,8 +2,8 @@ import java.util.*;
 
 public class FriendService
 {
-    private Map<UUID, Set<UUID>> friends;
-    private List<FriendRequest> requests;
+    private Map<UUID, Set<UUID>> friends; //hashmap que contem amizades ja estabelecidas
+    private List<FriendRequest> requests; //lista de requisicoes de amizade
 
     public FriendService()
         {
@@ -11,16 +11,16 @@ public class FriendService
             this.requests = new ArrayList<>();
         }
 
-    // Enviar pedido de amizade
+    //envia pedido de amizade
     public boolean sendFriendRequest(UUID fromUserId, UUID toUserId)
     {
-        // Impede pedido a si mesmo ou duplicado
+        //impeded pedido a si mesmo e pedido com amizades ja estabelecias
         if (fromUserId.equals(toUserId) || isAlreadyFriends(fromUserId, toUserId))
             {
                 return false;
             }
 
-        // Verifica se já existe um pedido pendente
+        //verifica se ja ha um pedido pendente
         for (FriendRequest r : requests)
             {
                 if (r.getSenderId().equals(fromUserId) && r.getReceiverId().equals(toUserId) && r.getStatus() == RequestStatus.PENDING)
@@ -33,7 +33,7 @@ public class FriendService
         return true;
     }
 
-    // Aceitar pedido
+    //aceita pedido
     public boolean acceptFriendRequest(UUID fromUserId, UUID toUserId)
     {
         for (FriendRequest r : requests) {
@@ -48,6 +48,7 @@ public class FriendService
 
     private void addFriendship(UUID u1, UUID u2)
     {
+        //cria um hashmap caso nao exista para registrar a nova amizade
         friends.computeIfAbsent(u1, k -> new HashSet<>()).add(u2);
         friends.computeIfAbsent(u2, k -> new HashSet<>()).add(u1);
     }
