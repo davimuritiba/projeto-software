@@ -28,7 +28,10 @@ public class Group
             {
                 return name;
             }
-
+        public String getDescription()
+            {
+                return description;
+            }
         public Set<UUID> getMembers()
             {
                 return members;

@@ -1,5 +1,7 @@
 import java.util.UUID;
 import java.time.LocalDateTime;
+import java.util.Set;
+import java.util.HashSet;
 public class Post
     {
         private UUID id;
@@ -7,7 +9,7 @@ public class Post
         private String content;
         private LocalDateTime createdAt;
         private String postType;
-
+        private Set<UUID> likes;
 
         public Post(UUID userId, String content, String postType)
             {
@@ -16,6 +18,7 @@ public class Post
                 this.content = content;
                 this.createdAt =LocalDateTime.now();
                 this.postType = postType;
+                this.likes = new HashSet<>();
             }
         public UUID getId()
             {
@@ -48,4 +51,30 @@ public class Post
                 this.postType = postType;
             }
 
+        public boolean like(UUID userId) {
+            return likes.add(userId); // retorna false se já tiver curtido
+        }
+
+        public boolean unlike(UUID userId) {
+            return likes.remove(userId); // desfaz o like
+        }
+
+        public int getLikeCount() {
+            return likes.size();
+        }
+
+        public Set<UUID> getLikes() {
+            return likes;
+        }
+
+        @Override
+        public String toString() {
+            return "Post{" +
+                    "id=" + id +
+                    ", userId=" + userId +
+                    ",  post type=" + postType +
+                    ", content='" + content + '\'' +
+                    ", create at=" + createdAt +
+                    '}';
+        }
     }

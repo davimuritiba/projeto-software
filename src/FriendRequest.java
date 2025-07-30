@@ -36,4 +36,14 @@ public class FriendRequest
             {
                 this.status = RequestStatus.REJECTED;
             }
+
+        @Override
+        public String toString()
+            {
+                return "FriendRequest{" +
+                        "sender=" + senderId +
+                        ", receiver=" + receiverId +
+                        ", status=" + status +
+                        '}';
+            }
     }

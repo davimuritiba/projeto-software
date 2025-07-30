@@ -8,6 +8,9 @@ public class User
         private String password;
         private String email;
         private boolean active;
+        private PrivacyLevel postPrivacy = PrivacyLevel.PUBLIC;
+        private PrivacyLevel messagePrivacy = PrivacyLevel.PUBLIC;
+        private PrivacyLevel friendListPrivacy = PrivacyLevel.PUBLIC;
 
         //construtor da classe
         public User(UUID id, String name, String password, String email, boolean active)
@@ -58,5 +61,39 @@ public class User
             {
                 this.active = false;
             }
+        public PrivacyLevel getPostPrivacy() {
+            return postPrivacy;
+        }
 
+        public void setPostPrivacy(PrivacyLevel postPrivacy) {
+            this.postPrivacy = postPrivacy;
+        }
+
+        public PrivacyLevel getMessagePrivacy() {
+            return messagePrivacy;
+        }
+
+        public void setMessagePrivacy(PrivacyLevel messagePrivacy) {
+            this.messagePrivacy = messagePrivacy;
+        }
+
+        public PrivacyLevel getFriendListPrivacy() {
+            return friendListPrivacy;
+        }
+
+        public void setFriendListPrivacy(PrivacyLevel friendListPrivacy) {
+            this.friendListPrivacy = friendListPrivacy;
+        }
+
+
+        @Override
+        public String toString()
+            {
+                return "User{" +
+                        "id=" + id +
+                        ", name='" + name + '\'' +
+                        ", email='" + email + '\'' +
+                        ", active=" + active +
+                        '}';
+            }
     }

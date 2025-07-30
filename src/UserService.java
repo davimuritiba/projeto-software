@@ -57,9 +57,35 @@ public class UserService
                     }
                 return null;
             }
+        public  User getUserById(UUID id)
+            {
+                for (User u : users)
+                    {
+                        if (u.getId().equals(id))
+                        {
+                            return u;
+                        }
+                    }
+                return null; // ou lance uma exceção se preferir
+            }
+
 
         public List<User> listAllUsers()
             {
                 return users;
             }
+        public User authenticate(String email, String password)
+        {
+            for (User user : users)
+            {
+                if (user.getEmail().equalsIgnoreCase(email)
+                        && user.getPassword().equals(password)
+                        && user.isActive())
+                    {
+                        return user;
+                    }
+            }
+            return null;
+        }
+
     }

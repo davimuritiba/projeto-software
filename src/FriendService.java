@@ -4,12 +4,10 @@ public class FriendService
 {
     private Map<UUID, Set<UUID>> friends; //hashmap que contem amizades ja estabelecidas
     private List<FriendRequest> requests; //lista de requisicoes de amizade
+    private NotificationService  notificationService;
+    private UserService userService;
 
-    public FriendService()
-        {
-            this.friends = new HashMap<>();
-            this.requests = new ArrayList<>();
-        }
+
 
     //envia pedido de amizade
     public boolean sendFriendRequest(UUID fromUserId, UUID toUserId)
@@ -30,16 +28,24 @@ public class FriendService
             }
 
         requests.add(new FriendRequest(fromUserId, toUserId));
+        String senderName = userService.getUserById(fromUserId).getName();
+        notificationService.sendNotification(toUserId, "Você recebeu um pedido de amizade de " + senderName + ".");
         return true;
     }
 
     //aceita pedido
-    public boolean acceptFriendRequest(UUID fromUserId, UUID toUserId)
-    {
+    public boolean acceptFriendRequest(UUID fromUserId, UUID toUserId) {
         for (FriendRequest r : requests) {
-            if (r.getSenderId().equals(fromUserId) && r.getReceiverId().equals(toUserId) && r.getStatus() == RequestStatus.PENDING) {
+            if (r.getSenderId().equals(fromUserId) && r.getReceiverId().equals(toUserId)
+                    && r.getStatus() == RequestStatus.PENDING) {
+
                 r.accept();
                 addFriendship(fromUserId, toUserId);
+
+                // Notificação
+                String receiverName = userService.getUserById(toUserId).getName();
+                notificationService.sendNotification(fromUserId, receiverName + " aceitou seu pedido de amizade.");
+
                 return true;
             }
         }

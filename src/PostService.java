@@ -1,6 +1,7 @@
 import java.util.UUID;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.*;
 public class PostService
     {
         List <Post> posts;
@@ -29,6 +30,15 @@ public class PostService
                     }
                 return false;
             }
+        private Post findPostById(UUID postId) {
+            for (Post p : posts) {
+                if (p.getId().equals(postId)) {
+                    return p;
+                }
+            }
+            return null;
+        }
+
         public boolean deletePost(UUID postId)
             {
                 return posts.removeIf(post -> post.getId().equals(postId));
@@ -46,6 +56,28 @@ public class PostService
                     }
                 return userPosts;
             }
+        // Buscar post pelo ID
+        public Post getPostById(UUID postId) {
+            for (Post post : posts) {
+                if (post.getId().equals(postId)) {
+                    return post;
+                }
+            }
+            return null;
+        }
+        public boolean likePost(UUID postId, UUID userId) {
+            Post post = findPostById(postId);
+            if (post == null) return false;
+
+            Set<UUID> curtidas = post.getLikes();
+            if (curtidas.contains(userId)) return false;
+
+            curtidas.add(userId);
+            return true;
+        }
+
+
+
 
         public List<Post> getAllPosts()
             {

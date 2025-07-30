@@ -53,4 +53,15 @@ public class Message
             {
                 this.read = true;
             }
+
+
+        @Override
+        public String toString()
+            {
+                return "De: " + senderId +
+                        ", Para: " + receiverId +
+                        ", [" + sentDate + "] " +
+                        (read ? "[LIDA] " : "") + content;
+            }
+
     }
